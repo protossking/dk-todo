@@ -31,6 +31,7 @@ jobs:
           files: ${{ env.RESOURCE_PATH }}
         env:
           override.value: 'from deploy.yaml'
+        working-directory: ./todo
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
