@@ -7,7 +7,7 @@ on:
 
 env:
   S3_BUCKET_NAME: dk-todo
-  RESOURCE_PATH: ./todo/src/main/resources/application.yaml
+  RESOURCE_PATH: todo/src/main/resources/application.yaml
   CODE_DEPLOY_APPLICATION_NAME: dk-todo
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: dk-todo-server
 
