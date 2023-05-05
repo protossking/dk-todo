@@ -24,7 +24,7 @@ public class SwaggerConfig {
                 .in(SecurityScheme.In.HEADER).name("Authorization");
         SecurityRequirement securityRequirement = new SecurityRequirement().addList("bearerAuth");
 
-        Info info = new Info().title("APO ADMIN BE").version("v1.0");
+        Info info = new Info().title("TodoList").version("v1.0");
 
 
 

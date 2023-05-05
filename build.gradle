@@ -23,9 +23,25 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+//	JPA
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'mysql:mysql-connector-java:8.0.30'
+	runtimeOnly 'mysql:mysql-connector-java:8.0.30'
+
+	// jwt
+	implementation 'com.auth0:java-jwt:4.2.1'
+
 
 //	swagger
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+
+//	Oauth2
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
 }
 
 tasks.named('test') {
