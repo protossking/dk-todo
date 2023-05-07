@@ -10,6 +10,8 @@ import org.hibernate.annotations.Comment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -59,12 +61,21 @@ public class Member {
     @Column(name = "backgroud_img")
     private String backgroundImg;
 
+    @Comment("트위터 URL")
+    @Column(name = "twitter_url")
+    private String twitterUrl;
+
+    @Comment("인스타그램 URL")
+    @Column(name = "instagram_url")
+    private String instagramUrl;
+
+    @Comment("페이스북 URL")
+    @Column(name = "facebook_url")
+    private String facebookUrl;
+
     @Comment("리프레쉬 토큰")
     @Column(name = "refresh_token")
     private String refreshToken;
-
-
-
 
     public void passwordEncode(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
@@ -74,6 +85,8 @@ public class Member {
         this.refreshToken = updateRefreshToken;
     }
 
+    @OneToMany(mappedBy = "member")
+    List<Task> taskList = new ArrayList<>();
 
 
 }

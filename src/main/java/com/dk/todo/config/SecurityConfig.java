@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/", "/css/**", "/images/**", "/js/**", "/favicon.ico", "/swagger-ui/**").permitAll()
-                .antMatchers("/sign-up").permitAll()
+                .antMatchers("/api/v1/auth/**").permitAll()
                 .and()
                 .oauth2Login()
                 .successHandler(oAuth2LoginSuccessHandler)

@@ -1,4 +1,4 @@
-package com.dk.todo.entity.dto;
+package com.dk.todo.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
