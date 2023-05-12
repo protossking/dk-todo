@@ -1,24 +1,23 @@
 package com.dk.todo.dto;
 
 import com.dk.todo.utils.ResponseStatus;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-public class ResponseDto<T> {
+public class ResponseDTO<T> {
 
     private ResponseStatus status;
     private String message;
     private T data;
 
 
-    public ResponseDto() {
+    public ResponseDTO() {
     }
-    public ResponseDto(ResponseStatus status, T data) {
+    public ResponseDTO(ResponseStatus status, T data) {
         this.status = status;
         this.data = data;
     }
-    public ResponseDto(ResponseStatus status, String message, T data) {
+    public ResponseDTO(ResponseStatus status, String message, T data) {
         this.status = status;
         this.message = message;
         this.data = data;

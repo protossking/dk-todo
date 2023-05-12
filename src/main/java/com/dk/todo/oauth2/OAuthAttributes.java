@@ -1,8 +1,8 @@
 package com.dk.todo.oauth2;
 
-import com.dk.todo.entity.Member;
-import com.dk.todo.entity.enums.Role;
-import com.dk.todo.entity.enums.SocialType;
+import com.dk.todo.domain.Member;
+import com.dk.todo.domain.enums.Role;
+import com.dk.todo.domain.enums.SocialType;
 import lombok.Builder;
 import lombok.Getter;
 

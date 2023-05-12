@@ -1,7 +1,7 @@
 package com.dk.todo.repository;
 
-import com.dk.todo.entity.Member;
-import com.dk.todo.entity.enums.SocialType;
+import com.dk.todo.domain.Member;
+import com.dk.todo.domain.enums.SocialType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

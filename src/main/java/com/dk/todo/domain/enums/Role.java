@@ -1,7 +1,6 @@
-package com.dk.todo.entity.enums;
+package com.dk.todo.domain.enums;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Getter

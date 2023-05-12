@@ -1,4 +1,4 @@
-package com.dk.todo.entity.enums;
+package com.dk.todo.domain.enums;
 
 import lombok.Getter;
 

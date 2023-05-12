@@ -1,6 +1,6 @@
 package com.dk.todo.service;
 
-import com.dk.todo.entity.Member;
+import com.dk.todo.domain.Member;
 import com.dk.todo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,5 +24,7 @@ public class LoginService implements UserDetailsService {
                 .password(member.getPassword())
                 .roles(member.getRole().name())
                 .build();
+
+
     }
 }

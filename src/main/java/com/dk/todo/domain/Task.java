@@ -1,11 +1,12 @@
-package com.dk.todo.entity;
+package com.dk.todo.domain;
 
-import com.dk.todo.entity.enums.TaskStatus;
+import com.dk.todo.domain.enums.TaskStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,8 +16,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @Table(name = "task")
+@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Task {
+public class Task extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

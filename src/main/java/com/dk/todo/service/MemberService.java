@@ -1,8 +1,8 @@
 package com.dk.todo.service;
 
-import com.dk.todo.entity.Member;
+import com.dk.todo.domain.Member;
 import com.dk.todo.dto.MemberSignUpDTO;
-import com.dk.todo.entity.enums.Role;
+import com.dk.todo.domain.enums.Role;
 import com.dk.todo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

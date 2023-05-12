@@ -1,7 +1,7 @@
 package com.dk.todo.oauth2;
 
-import com.dk.todo.entity.Member;
-import com.dk.todo.entity.enums.SocialType;
+import com.dk.todo.domain.Member;
+import com.dk.todo.domain.enums.SocialType;
 import com.dk.todo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @Slf4j

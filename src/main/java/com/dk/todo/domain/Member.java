@@ -1,7 +1,7 @@
-package com.dk.todo.entity;
+package com.dk.todo.domain;
 
-import com.dk.todo.entity.enums.Role;
-import com.dk.todo.entity.enums.SocialType;
+import com.dk.todo.domain.enums.Role;
+import com.dk.todo.domain.enums.SocialType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -88,5 +88,8 @@ public class Member {
     @OneToMany(mappedBy = "member")
     List<Task> taskList = new ArrayList<>();
 
-
+    public Member(Long id, String email) {
+        this.id = id;
+        this.email = email;
+    }
 }

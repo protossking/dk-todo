@@ -2,7 +2,7 @@ package com.dk.todo.controller;
 
 import com.dk.todo.dto.LoginRequestDTO;
 import com.dk.todo.dto.MemberSignUpDTO;
-import com.dk.todo.dto.ResponseDto;
+import com.dk.todo.dto.ResponseDTO;
 import com.dk.todo.service.MemberService;
 import com.dk.todo.utils.ResponseUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +24,7 @@ public class MemberController {
 
 
     @PostMapping(value = "/sign-up")
-    public ResponseDto<?> signUp(@RequestBody MemberSignUpDTO memberSignUpDTO) throws Exception {
+    public ResponseDTO<?> signUp(@RequestBody MemberSignUpDTO memberSignUpDTO) throws Exception {
 
         memberService.signUp(memberSignUpDTO);
         return ResponseUtil.SUCCESS(null);

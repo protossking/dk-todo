@@ -1,6 +1,6 @@
 package com.dk.todo.handler;
 
-import com.dk.todo.entity.enums.Role;
+import com.dk.todo.domain.enums.Role;
 import com.dk.todo.jwt.service.JwtService;
 import com.dk.todo.oauth2.CustomOAuth2Member;
 import com.dk.todo.repository.MemberRepository;

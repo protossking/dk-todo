@@ -1,7 +1,7 @@
 package com.dk.todo.jwt.filter;
 
 
-import com.dk.todo.entity.Member;
+import com.dk.todo.domain.Member;
 import com.dk.todo.jwt.service.JwtService;
 import com.dk.todo.jwt.util.PasswordUtil;
 import com.dk.todo.repository.MemberRepository;
@@ -13,7 +13,6 @@ import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMap
 import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;

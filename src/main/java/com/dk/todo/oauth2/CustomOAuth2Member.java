@@ -1,6 +1,6 @@
 package com.dk.todo.oauth2;
 
-import com.dk.todo.entity.enums.Role;
+import com.dk.todo.domain.enums.Role;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
