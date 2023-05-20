@@ -25,6 +25,19 @@ public class Users {
 
     private String provider;
 
+    private String profileImg;
+
+    private String backgroundImg;
+
+    private String twitterUrl;
+
+    private String instagramUrl;
+
+    private String facebookUrl;
+
+
+
+
     @Builder
     public Users(Long id, String name, String email, String password, Role role, String provider) {
         this.id = id;
