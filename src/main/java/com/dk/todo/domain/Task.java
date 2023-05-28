@@ -1,6 +1,8 @@
 package com.dk.todo.domain;
 
-import com.dk.todo.domain.enums.TaskType;
+import com.dk.todo.domain.enums.TaskStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +11,8 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Task {
 
@@ -24,16 +28,19 @@ public class Task {
     private String titleEmoji;
 
     @Enumerated(EnumType.STRING)
-    private TaskType taskType;
+    private TaskStatus status;
+
+    private String backgroundColor;
 
     private LocalDateTime startedDt;
 
     private LocalDateTime endedDt;
 
-
-
     @ManyToOne
-    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Users member;
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT), insertable = false, updatable = false)
+    private Users users;
+
+    @Column(name = "user_id")
+    private Long userId;
 
 }

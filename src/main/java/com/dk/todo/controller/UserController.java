@@ -1,6 +1,7 @@
 package com.dk.todo.controller;
 
 import com.dk.todo.domain.dto.SignupForm;
+import com.dk.todo.domain.response.ApiResponse;
 import com.dk.todo.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,14 +19,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginSuccess(@RequestBody Map<String, String> loginForm) {
-        String token = service.login(loginForm.get("username"), loginForm.get("password"));
-        return ResponseEntity.ok(token);
+    public ApiResponse<String> loginSuccess(@RequestBody Map<String, String> loginForm) {
+        return ApiResponse.createSuccess(service.login(loginForm.get("email"), loginForm.get("password")));
     }
 
     @PostMapping("/signup")
-    public Long signup(@RequestBody SignupForm signupForm) {
-        return service.signup(signupForm);
+    public ApiResponse<Long> signup(@RequestBody SignupForm signupForm) {
+        return ApiResponse.createSuccess(service.signup(signupForm));
     }
 
     @GetMapping("/signup/check/{email}/exists")

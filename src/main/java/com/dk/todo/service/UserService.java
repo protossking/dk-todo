@@ -36,9 +36,8 @@ public class UserService {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
         // 검증된 인증 정보로 JWT 토큰 생성
-        String token = jwtTokenProvider.generateToken(authentication);
+        return jwtTokenProvider.generateToken(authentication);
 
-        return token;
     }
 
     public Long signup(SignupForm signupForm) {

@@ -1,6 +1,6 @@
 package com.dk.todo.domain.enums;
 
-public enum TaskType {
+public enum TaskStatus {
 
     TODO,
     DOING,

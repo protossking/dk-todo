@@ -14,6 +14,8 @@ public class OAuthAttributes {
     private String nameAttributeKey;
     private String name;
     private String email;
+
+    private String profileImg;
     private String provider;
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
@@ -42,6 +44,7 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .name((String) response.get("name"))
                 .email((String) response.get("email"))
+                .profileImg((String) response.get("profile_img"))
                 .provider("Naver")
                 .attributes(response)
                 .nameAttributeKey(userNameAttributeName)
