@@ -41,6 +41,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 
+        System.out.println(authentication);
         String token = tokenProvider.generateToken(authentication);
 
         return UriComponentsBuilder.fromUriString(targetUrl)

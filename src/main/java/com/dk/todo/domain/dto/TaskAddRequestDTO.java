@@ -27,7 +27,7 @@ public class TaskAddRequestDTO {
     private String backgroundColor;
 
 
-    public Task toEntity(String userId) {
+    public Task toEntity(Users users) {
 
         return Task.builder()
                 .title(this.title)
@@ -35,8 +35,8 @@ public class TaskAddRequestDTO {
                 .startedDt(this.startedAt)
                 .endedDt(this.endedAt)
                 .titleEmoji(this.titleEmoji)
-                .userId(Long.parseLong(userId))
                 .status(TaskStatus.TODO)
+                .users(users)
                 .build();
     }
 

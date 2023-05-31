@@ -1,15 +1,13 @@
 package com.dk.todo.controller;
 
 import com.dk.todo.domain.dto.TaskAddRequestDTO;
+import com.dk.todo.domain.response.ApiResponse;
 import com.dk.todo.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RequiredArgsConstructor
@@ -22,8 +20,11 @@ public class TaskController {
 
     @PostMapping("")
     public ResponseEntity<?> postTask(@RequestBody TaskAddRequestDTO taskAddRequestDTO) {
-
-
         return new ResponseEntity<>(taskService.addTask(taskAddRequestDTO), HttpStatus.OK);
     }
+
+//    @GetMapping("/list")
+//    public ApiResponse<TaskListResponseDTO> getTask() {
+//        return new ResponseEntity<>()
+//    }
 }

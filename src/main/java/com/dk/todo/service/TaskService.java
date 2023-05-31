@@ -28,10 +28,10 @@ public class TaskService {
     public Long addTask(TaskAddRequestDTO taskAddRequestDTO) {
 
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = userDetails.getUsername();
+        Users users = userRepository.findByEmail(email).get();
 
-
-
-        return taskRepository.save(taskAddRequestDTO.toEntity(userDetails.getUsername())).getId();
+        return taskRepository.save(taskAddRequestDTO.toEntity(users)).getId();
 
     }
 

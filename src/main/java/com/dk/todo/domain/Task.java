@@ -37,10 +37,9 @@ public class Task {
     private LocalDateTime endedDt;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT), insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Users users;
 
-    @Column(name = "user_id")
-    private Long userId;
+
 
 }

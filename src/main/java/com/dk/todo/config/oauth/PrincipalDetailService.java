@@ -24,7 +24,7 @@ public class PrincipalDetailService implements UserDetailsService {
                     return new UsernameNotFoundException("해당 사용자를 찾을 수 없습니다");
                 });
 
-        return new SessionUser(Long.toString(principal.getId()), principal.getEmail(),principal.getName(), principal.getPassword(), principal.getRole());
+        return new SessionUser(principal.getId(),principal.getEmail(),principal.getName(), principal.getPassword(), principal.getRole());
 
     }
 }

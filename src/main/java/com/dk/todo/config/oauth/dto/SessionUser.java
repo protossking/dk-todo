@@ -13,13 +13,13 @@ import java.util.Collection;
 public class SessionUser implements UserDetails {
 
 
-    private String id;
+    private Long id;
     private String email;
     private String name;
     private String password;
     private Role authority;
 
-    public SessionUser(String id, String email, String name, String password, Role authority) {
+    public SessionUser(Long id, String email, String name, String password, Role authority) {
 
         this.id = id;
         this.email = email;
@@ -32,10 +32,6 @@ public class SessionUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collections = new ArrayList<>();
-
-//        collections.add(() -> {
-//            return "ROLE_" + authorities;
-//        });
 
         collections.add(() -> {
             return "ROLE_" + authority;
@@ -55,7 +51,7 @@ public class SessionUser implements UserDetails {
     @Override
     public String getUsername() {
 //        return user.getName();
-        return id;
+        return email;
     }
 
     @Override
