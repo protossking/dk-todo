@@ -2,6 +2,7 @@ package com.dk.todo.config.oauth.dto;
 
 import com.dk.todo.domain.Users;
 import com.dk.todo.domain.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Getter
+
 public class SessionUser implements UserDetails {
 
 
@@ -19,6 +21,7 @@ public class SessionUser implements UserDetails {
     private String password;
     private Role authority;
 
+    @JsonIgnore
     public SessionUser(Long id, String email, String name, String password, Role authority) {
 
         this.id = id;
