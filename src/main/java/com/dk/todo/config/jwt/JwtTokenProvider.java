@@ -1,8 +1,10 @@
 package com.dk.todo.config.jwt;
 
+import com.dk.todo.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -10,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +26,10 @@ import java.util.stream.Collectors;
 public class JwtTokenProvider {
 
     private final Key key;
+
+    @Autowired
+    private  UserRepository userRepository;
+
 
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
@@ -39,11 +46,14 @@ public class JwtTokenProvider {
 
         String email = (String) oauth2User.getAttributes().get("email");
 
+        Long userId = userRepository.findByEmail(email).get().getId();
+
 
 
         //Access Token 생성
         return Jwts.builder()
                 .setSubject(email)
+                .claim("userId", userId)
                 .claim("auth", authorities)
                 .setExpiration(new Date(System.currentTimeMillis()+ 1000 * 60 * 30))
                 .signWith(key, SignatureAlgorithm.HS256)
