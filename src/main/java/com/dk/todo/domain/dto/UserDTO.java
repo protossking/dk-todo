@@ -1,0 +1,39 @@
+package com.dk.todo.domain.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+public class UserDTO {
+
+
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UserUpdateRequest {
+
+        private String name;
+        private String twitterUrl;
+        private String facebookUrl;
+        private String instagramUrl;
+
+    }
+
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UserUpdateResponse {
+
+        private String name;
+        private String twitterUrl;
+        private String facebookUrl;
+        private String instagramUrl;
+
+    }
+
+
+
+}

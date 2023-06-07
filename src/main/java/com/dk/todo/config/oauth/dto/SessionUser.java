@@ -22,14 +22,24 @@ public class SessionUser implements UserDetails {
     private Role authority;
 
     @JsonIgnore
-    public SessionUser(Long id, String email, String name, String password, Role authority) {
+    public SessionUser(Long id, String email, String name) {
 
+        this.id = id;
+        this.email = email;
+        this.name = name;
+    }
+
+    public SessionUser(Long id, String email) {
+        this.id = id;
+        this.email = email;
+    }
+
+    public SessionUser(Long id, String email, String name, String password, Role authority) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.password = password;
         this.authority = authority;
-
     }
 
     @Override

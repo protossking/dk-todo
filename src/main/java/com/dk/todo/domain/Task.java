@@ -41,5 +41,9 @@ public class Task {
     private Users users;
 
 
+    public void changeTaskStatus(String taskStatus) {
+        this.status = TaskStatus.valueOf(taskStatus);
+    }
+
 
 }

@@ -3,21 +3,19 @@ package com.dk.todo.controller;
 import com.dk.todo.config.oauth.dto.SessionUser;
 import com.dk.todo.domain.dto.TaskAddRequestDTO;
 import com.dk.todo.domain.dto.TaskDTO;
+import com.dk.todo.domain.enums.TaskStatus;
 import com.dk.todo.domain.response.ApiResponse;
 import com.dk.todo.service.TaskService;
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.nio.file.attribute.UserPrincipal;
-import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 
 @RequiredArgsConstructor
@@ -29,14 +27,23 @@ public class TaskController {
 
 
     @PostMapping("")
-    public ResponseEntity<?> postTask(@RequestBody @Valid TaskAddRequestDTO taskAddRequestDTO) {
-        return new ResponseEntity<>(taskService.addTask(taskAddRequestDTO), HttpStatus.OK);
+    public ResponseEntity<?> postTask(@RequestBody @Valid TaskAddRequestDTO taskAddRequestDTO, @Parameter(hidden = true) @AuthenticationPrincipal SessionUser sessionUser) {
+        return new ResponseEntity<>(taskService.addTask(taskAddRequestDTO, sessionUser.getId()), HttpStatus.OK);
     }
 
     @GetMapping("")
-    public ApiResponse<List<TaskDTO.TaskResponse>> getTask(@Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
+    public ApiResponse<Map<TaskStatus, List<TaskDTO.TaskResponse>>> findTask(@Parameter(hidden = true) @AuthenticationPrincipal SessionUser sessionUser) {
 
-        return ApiResponse.createSuccess(taskService.findTask(userDetails));
+        return ApiResponse.createSuccess(taskService.findTask(sessionUser.getId()));
+    }
 
+    @PatchMapping("/{id}")
+    public ApiResponse<TaskDTO.TaskUpdateResponse> updateTask(@PathVariable(value = "id") Long taskId, @RequestBody TaskDTO.TaskUpdateRequest taskUpdateRequest) {
+        return ApiResponse.createSuccess(taskService.updateTask(taskId, taskUpdateRequest));
+    }
+
+    @DeleteMapping("/{id}")
+    public ApiResponse<TaskDTO.TaskDeleteResponse> deleteTask(@PathVariable(value = "id") Long taskId) {
+        return ApiResponse.createSuccess(taskService.deleteTask(taskId));
     }
 }

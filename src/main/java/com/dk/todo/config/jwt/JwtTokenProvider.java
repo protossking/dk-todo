@@ -1,5 +1,7 @@
 package com.dk.todo.config.jwt;
 
+import com.dk.todo.config.oauth.dto.SessionUser;
+import com.dk.todo.domain.Users;
 import com.dk.todo.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -12,13 +14,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -73,7 +76,10 @@ public class JwtTokenProvider {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        UserDetails principal = new User(claims.getSubject(), "", authorities);
+        String userId = (claims.get("userId")).toString();
+        String email =  (claims.get("sub")).toString();
+//        UserDetails principal = new User(claims.getSubject(), "", authorities);
+        UserDetails principal = new SessionUser(Long.parseLong(userId), email);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 

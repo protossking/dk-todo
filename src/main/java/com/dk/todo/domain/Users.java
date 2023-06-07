@@ -1,5 +1,6 @@
 package com.dk.todo.domain;
 
+import com.dk.todo.domain.dto.UserDTO;
 import com.dk.todo.domain.enums.Role;
 import lombok.Builder;
 import lombok.Getter;
@@ -56,6 +57,13 @@ public class Users {
 
     public String getRoleKey() {
         return this.role.getKey();
+    }
+
+    public void updateUser(UserDTO.UserUpdateRequest userUpdateRequest) {
+        this.name = userUpdateRequest.getName();
+        this.facebookUrl = userUpdateRequest.getFacebookUrl();
+        this.twitterUrl = userUpdateRequest.getTwitterUrl();
+        this.instagramUrl = userUpdateRequest.getInstagramUrl();
     }
 }
 

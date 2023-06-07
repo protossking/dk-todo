@@ -3,6 +3,7 @@ package com.dk.todo.service;
 import com.dk.todo.config.jwt.JwtTokenProvider;
 import com.dk.todo.domain.Users;
 import com.dk.todo.domain.dto.SignupForm;
+import com.dk.todo.domain.dto.UserDTO;
 import com.dk.todo.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,13 +19,13 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserService {
 
     private final BCryptPasswordEncoder encoder;
-    private final UserRepository repository;
+    private final UserRepository userRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public UserService(BCryptPasswordEncoder encoder, UserRepository repository, AuthenticationManagerBuilder authenticationManagerBuilder, JwtTokenProvider jwtTokenProvider) {
+    public UserService(BCryptPasswordEncoder encoder, UserRepository userRepository, AuthenticationManagerBuilder authenticationManagerBuilder, JwtTokenProvider jwtTokenProvider) {
         this.encoder = encoder;
-        this.repository = repository;
+        this.userRepository = userRepository;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.jwtTokenProvider = jwtTokenProvider;
     }
@@ -49,7 +50,7 @@ public class UserService {
 
         String encPwd = encoder.encode(signupForm.getPassword());
 
-        Users user = repository.save(signupForm.toEntity(encPwd));
+        Users user = userRepository.save(signupForm.toEntity(encPwd));
 
         if(user!=null) {
             return user.getId();
@@ -58,7 +59,18 @@ public class UserService {
     }
 
     public boolean checkEmailExists(String email) {
-        return repository.existsUsersByEmail(email);
+        return userRepository.existsUsersByEmail(email);
+    }
+
+
+    @Transactional
+    public UserDTO.UserUpdateResponse updateUser(Long userId, UserDTO.UserUpdateRequest userUpdateRequest) {
+
+        Users findUser = userRepository.findById(userId).get();
+
+        findUser.updateUser(userUpdateRequest);
+
+        return new UserDTO.UserUpdateResponse(findUser.getName(), findUser.getTwitterUrl(), findUser.getFacebookUrl(), findUser.getInstagramUrl());
     }
 
 }

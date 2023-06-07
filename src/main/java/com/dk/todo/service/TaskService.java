@@ -1,22 +1,18 @@
 package com.dk.todo.service;
 
-import com.dk.todo.config.oauth.dto.SessionUser;
 import com.dk.todo.domain.Task;
 import com.dk.todo.domain.Users;
 import com.dk.todo.domain.dto.TaskAddRequestDTO;
 import com.dk.todo.domain.dto.TaskDTO;
+import com.dk.todo.domain.enums.TaskStatus;
 import com.dk.todo.repository.TaskRepository;
 import com.dk.todo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,26 +25,39 @@ public class TaskService {
 
 
     @Transactional
-    public Long addTask(TaskAddRequestDTO taskAddRequestDTO) {
+    public Long addTask(TaskAddRequestDTO taskAddRequestDTO, Long userId) {
 
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = userDetails.getUsername();
-        Users users = userRepository.findByEmail(email).get();
 
-        return taskRepository.save(taskAddRequestDTO.toEntity(users)).getId();
+        Users findUser = userRepository.findById(userId).get();
+
+        return taskRepository.save(taskAddRequestDTO.toEntity(findUser)).getId();
     }
 
-    public List<TaskDTO.TaskResponse> findTask(UserDetails userDetails) {
-
-        Long userId = userRepository.findByEmail(userDetails.getUsername()).get().getId();
-
+    public Map<TaskStatus, List<TaskDTO.TaskResponse>> findTask(Long userId) {
 
         return taskRepository.findByUsers_Id(userId).stream()
                 .map(t -> new TaskDTO.TaskResponse(t.getId(), t.getTitle(), t.getTitleEmoji(), t.getDescription(), t.getStatus(), t.getStartedDt(), t.getEndedDt()))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()).stream().collect(Collectors.groupingBy(TaskDTO.TaskResponse::getTaskStatus));
+    }
 
+    @Transactional
+    public TaskDTO.TaskUpdateResponse updateTask(Long taskId, TaskDTO.TaskUpdateRequest taskUpdateRequest) {
 
+        /*
+        일자 기준으로 TODO 상태로 돌리는거 예외처리해야함
+         */
 
+        Task findTask = taskRepository.findById(taskId).get();
+        findTask.changeTaskStatus(taskUpdateRequest.getTaskStatus());
+
+        return new TaskDTO.TaskUpdateResponse(findTask.getId(), findTask.getStatus());
+    }
+
+    @Transactional
+    public TaskDTO.TaskDeleteResponse deleteTask(Long taskId) {
+        taskRepository.deleteById(taskId);
+
+        return new TaskDTO.TaskDeleteResponse(taskId);
     }
 
 }
