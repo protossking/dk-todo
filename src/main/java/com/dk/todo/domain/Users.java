@@ -65,5 +65,14 @@ public class Users {
         this.twitterUrl = userUpdateRequest.getTwitterUrl();
         this.instagramUrl = userUpdateRequest.getInstagramUrl();
     }
+
+    public void updateUserWithImageFile(UserDTO.UserUpdateRequest userUpdateRequest, String fileUrl) {
+
+        this.name = userUpdateRequest.getName();
+        this.facebookUrl = userUpdateRequest.getFacebookUrl();
+        this.twitterUrl = userUpdateRequest.getTwitterUrl();
+        this.instagramUrl = userUpdateRequest.getInstagramUrl();
+        this.profileImg = fileUrl;
+    }
 }
 

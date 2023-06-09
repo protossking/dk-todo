@@ -1,10 +1,12 @@
 package com.dk.todo.service;
 
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.dk.todo.config.jwt.JwtTokenProvider;
 import com.dk.todo.domain.Users;
 import com.dk.todo.domain.dto.SignupForm;
 import com.dk.todo.domain.dto.UserDTO;
 import com.dk.todo.repository.UserRepository;
+import com.dk.todo.utils.FileUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,22 +14,31 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @Transactional
 public class UserService {
 
+
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+
+    private final JwtTokenProvider jwtTokenProvider;
     private final BCryptPasswordEncoder encoder;
     private final UserRepository userRepository;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final FileUtils fileUtils;
 
-    public UserService(BCryptPasswordEncoder encoder, UserRepository userRepository, AuthenticationManagerBuilder authenticationManagerBuilder, JwtTokenProvider jwtTokenProvider) {
+
+    public UserService(BCryptPasswordEncoder encoder, UserRepository userRepository, AuthenticationManagerBuilder authenticationManagerBuilder, JwtTokenProvider jwtTokenProvider, AmazonS3Client amazonS3Client, FileUtils fileUtils) {
+
         this.encoder = encoder;
         this.userRepository = userRepository;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.fileUtils = fileUtils;
+
     }
 
     public String login(String email, String password) {
@@ -64,11 +75,19 @@ public class UserService {
 
 
     @Transactional
-    public UserDTO.UserUpdateResponse updateUser(Long userId, UserDTO.UserUpdateRequest userUpdateRequest) {
+    public UserDTO.UserUpdateResponse updateUser(UserDTO.UserUpdateRequest userUpdateRequest, MultipartFile multipartFile, Long userId) {
 
         Users findUser = userRepository.findById(userId).get();
 
-        findUser.updateUser(userUpdateRequest);
+        if(!ObjectUtils.isEmpty(multipartFile)) {
+
+            String fileUrl = fileUtils.fileUpload(multipartFile, userId);
+
+            findUser.updateUserWithImageFile(userUpdateRequest, fileUrl);
+        }
+        else {
+            findUser.updateUser(userUpdateRequest);
+        }
 
         return new UserDTO.UserUpdateResponse(findUser.getName(), findUser.getTwitterUrl(), findUser.getFacebookUrl(), findUser.getInstagramUrl());
     }

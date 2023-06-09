@@ -1,11 +1,16 @@
 package com.dk.todo.controller;
 
+import com.dk.todo.config.oauth.dto.SessionUser;
 import com.dk.todo.domain.dto.SignupForm;
 import com.dk.todo.domain.dto.UserDTO;
 import com.dk.todo.domain.response.ApiResponse;
 import com.dk.todo.service.UserService;
+import io.swagger.v3.oas.annotations.Parameter;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -34,10 +39,13 @@ public class UserController {
         return ResponseEntity.ok(userService.checkEmailExists(email));
     }
 
-    @PatchMapping("/{id}")
-    public ApiResponse<UserDTO.UserUpdateResponse> updateUser(@PathVariable(value = "id") Long userId, @RequestBody UserDTO.UserUpdateRequest userUpdateRequest) {
+    @PatchMapping(value = "/update",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse<UserDTO.UserUpdateResponse> updateUser(@RequestPart(value = "userUpdateRequest") UserDTO.UserUpdateRequest userUpdateRequest,
+                                                              @RequestPart(value = "multipartFile") MultipartFile multipartFile,
+                                                              @Parameter(hidden = true) @AuthenticationPrincipal SessionUser sessionUser) {
 
-        return ApiResponse.createSuccess(userService.updateUser(userId, userUpdateRequest));
+        return ApiResponse.createSuccess(userService.updateUser(userUpdateRequest, multipartFile, sessionUser.getId()));
     }
 
 
