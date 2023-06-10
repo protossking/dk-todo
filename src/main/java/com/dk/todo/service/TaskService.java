@@ -48,7 +48,7 @@ public class TaskService {
          */
 
         Task findTask = taskRepository.findById(taskId).get();
-        findTask.changeTaskStatus(taskUpdateRequest.getTaskStatus());
+        findTask.updateTaskStatus(taskUpdateRequest.getTaskStatus());
 
         return new TaskDTO.TaskUpdateResponse(findTask.getId(), findTask.getStatus());
     }
@@ -69,8 +69,15 @@ public class TaskService {
 
     }
 
-    public TaskDTO.TaskBookmarkUpdateResponse updateBookmark (Long userId) {
-        return null;
+    @Transactional
+    public TaskDTO.TaskBookmarkUpdateResponse updateBookmark (Long userId, Long taskId) {
+
+        Task findTask = taskRepository.findById(taskId).get();
+
+        findTask.updateBookmark();
+
+
+        return new TaskDTO.TaskBookmarkUpdateResponse(findTask.getId(), findTask.getIsBookmark());
     }
 
 }

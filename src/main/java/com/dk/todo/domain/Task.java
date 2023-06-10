@@ -48,9 +48,12 @@ public class Task {
     private Users users;
 
 
-    public void changeTaskStatus(String taskStatus) {
+    public void updateTaskStatus(String taskStatus) {
         this.status = TaskStatus.valueOf(taskStatus);
     }
 
+    public void updateBookmark() {
+        this.isBookmark = !isBookmark;
+    }
 
 }

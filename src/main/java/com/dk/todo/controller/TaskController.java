@@ -54,7 +54,7 @@ public class TaskController {
     }
 
     @PatchMapping("/bookmark")
-    public ApiResponse<TaskDTO.TaskBookmarkUpdateResponse> updateBookmark(@Parameter(hidden = true) @AuthenticationPrincipal SessionUser sessionUser) {
-        return ApiResponse.createSuccess(taskService.updateBookmark(sessionUser.getId()));
+    public ApiResponse<TaskDTO.TaskBookmarkUpdateResponse> updateBookmark(@RequestBody Long taskId, @Parameter(hidden = true) @AuthenticationPrincipal SessionUser sessionUser) {
+        return ApiResponse.createSuccess(taskService.updateBookmark(sessionUser.getId(), taskId));
     }
 }
