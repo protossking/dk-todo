@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicInsert
 @Builder
 @Entity
 public class Task {
@@ -35,6 +38,10 @@ public class Task {
     private LocalDateTime startedDt;
 
     private LocalDateTime endedDt;
+
+    @Column(nullable = false)
+    @ColumnDefault("1")
+    private Boolean isBookmark;
 
     @ManyToOne
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))

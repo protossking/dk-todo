@@ -12,4 +12,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     List<Task> findByUsers_Id(Long userId);
 
+
+    List<Task> findByUsers_IdAndIsBookmarkIsTrue (Long userId);
+
 }

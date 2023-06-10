@@ -46,4 +46,15 @@ public class TaskController {
     public ApiResponse<TaskDTO.TaskDeleteResponse> deleteTask(@PathVariable(value = "id") Long taskId) {
         return ApiResponse.createSuccess(taskService.deleteTask(taskId));
     }
+
+    @GetMapping("/bookmark")
+    public ApiResponse<Map<TaskStatus, List<TaskDTO.TaskResponse>>> findBookmarkedTask(@Parameter(hidden = true) @AuthenticationPrincipal SessionUser sessionUser) {
+
+        return ApiResponse.createSuccess(taskService.findBookmarkedTask(sessionUser.getId()));
+    }
+
+    @PatchMapping("/bookmark")
+    public ApiResponse<TaskDTO.TaskBookmarkUpdateResponse> updateBookmark(@Parameter(hidden = true) @AuthenticationPrincipal SessionUser sessionUser) {
+        return ApiResponse.createSuccess(taskService.updateBookmark(sessionUser.getId()));
+    }
 }

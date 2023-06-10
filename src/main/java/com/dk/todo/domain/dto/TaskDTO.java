@@ -51,6 +51,8 @@ public class TaskDTO {
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
         private LocalDateTime endedDt;
+
+        private Boolean isBookmarked;
     }
 
     @Getter
@@ -66,5 +68,12 @@ public class TaskDTO {
     public static class TaskDeleteResponse {
         private Long taskId;
 
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class TaskBookmarkUpdateResponse {
+        private Long taskId;
+        private Boolean isBookmark;
     }
 }

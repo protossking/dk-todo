@@ -36,7 +36,7 @@ public class TaskService {
     public Map<TaskStatus, List<TaskDTO.TaskResponse>> findTask(Long userId) {
 
         return taskRepository.findByUsers_Id(userId).stream()
-                .map(t -> new TaskDTO.TaskResponse(t.getId(), t.getTitle(), t.getTitleEmoji(), t.getDescription(), t.getStatus(), t.getStartedDt(), t.getEndedDt()))
+                .map(t -> new TaskDTO.TaskResponse(t.getId(), t.getTitle(), t.getTitleEmoji(), t.getDescription(), t.getStatus(), t.getStartedDt(), t.getEndedDt(), t.getIsBookmark()))
                 .collect(Collectors.toList()).stream().collect(Collectors.groupingBy(TaskDTO.TaskResponse::getTaskStatus));
     }
 
@@ -58,6 +58,19 @@ public class TaskService {
         taskRepository.deleteById(taskId);
 
         return new TaskDTO.TaskDeleteResponse(taskId);
+    }
+
+
+    public Map<TaskStatus, List<TaskDTO.TaskResponse>> findBookmarkedTask(Long userId) {
+
+        return taskRepository.findByUsers_IdAndIsBookmarkIsTrue(userId).stream()
+                .map(t -> new TaskDTO.TaskResponse(t.getId(), t.getTitle(), t.getTitleEmoji(), t.getDescription(), t.getStatus(), t.getStartedDt(), t.getEndedDt(), t.getIsBookmark()))
+                .collect(Collectors.toList()).stream().collect(Collectors.groupingBy(TaskDTO.TaskResponse::getTaskStatus));
+
+    }
+
+    public TaskDTO.TaskBookmarkUpdateResponse updateBookmark (Long userId) {
+        return null;
     }
 
 }
