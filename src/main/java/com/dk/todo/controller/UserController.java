@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @GetMapping("")
-    public ApiResponse<UserDTO.UserDetailResponse> getUser(@AuthenticationPrincipal SessionUser sessionUser) {
+    public ApiResponse<UserDTO.UserDetailResponse> getUser(@Parameter(hidden = true) @AuthenticationPrincipal SessionUser sessionUser) {
         return ApiResponse.createSuccess(userService.findUser(sessionUser.getId()));
     }
 
