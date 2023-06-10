@@ -34,6 +34,20 @@ public class UserDTO {
 
     }
 
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UserDetailResponse {
+
+        private Long id;
+        private String email;
+        private String facebookUrl;
+        private String instagramUrl;
+        private String twitterUrl;
+        private String name;
+        private String profileImg;
+    }
+
 
 
 }

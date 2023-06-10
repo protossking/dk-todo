@@ -42,10 +42,15 @@ public class UserController {
     @PatchMapping(value = "/update",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<UserDTO.UserUpdateResponse> updateUser(@RequestPart(value = "userUpdateRequest") UserDTO.UserUpdateRequest userUpdateRequest,
-                                                              @RequestPart(value = "multipartFile") MultipartFile multipartFile,
+                                                              @RequestPart(value = "multipartFile", required = false) MultipartFile multipartFile,
                                                               @Parameter(hidden = true) @AuthenticationPrincipal SessionUser sessionUser) {
 
         return ApiResponse.createSuccess(userService.updateUser(userUpdateRequest, multipartFile, sessionUser.getId()));
+    }
+
+    @GetMapping("")
+    public ApiResponse<UserDTO.UserDetailResponse> getUser(@AuthenticationPrincipal SessionUser sessionUser) {
+        return ApiResponse.createSuccess(userService.findUser(sessionUser.getId()));
     }
 
 

@@ -92,4 +92,14 @@ public class UserService {
         return new UserDTO.UserUpdateResponse(findUser.getName(), findUser.getTwitterUrl(), findUser.getFacebookUrl(), findUser.getInstagramUrl());
     }
 
+
+    public UserDTO.UserDetailResponse findUser(Long userId) {
+        Users findUser = userRepository.findById(userId).get();
+
+        return new UserDTO.UserDetailResponse(findUser.getId(), findUser.getEmail(), findUser.getFacebookUrl(), findUser.getInstagramUrl(), findUser.getTwitterUrl(), findUser.getName(), findUser.getProfileImg());
+
+
+
+    }
+
 }
