@@ -1,5 +1,15 @@
 package com.dk.todo.config.jwt;
 
+import com.dk.todo.domain.response.ApiResponse;
+import com.dk.todo.utils.ErrorCode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
+import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
@@ -10,26 +20,55 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private final JwtTokenProvider jwtTokenProvider;
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
+
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String token = resolveToken((HttpServletRequest) request);
 
-        // 토큰 유효성 검사
-        if (token!=null && jwtTokenProvider.validateToken(token)) {
-            Authentication authentication = jwtTokenProvider.getAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        try{
+
+            if (token != null) {
+                jwtTokenProvider.validateToken(token);
+                Authentication authentication = jwtTokenProvider.getAuthentication(token);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+
+            chain.doFilter(request, response);
         }
-        chain.doFilter(request, response);
+        catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+            log.info("Invalid JWT Token", e);
+        } catch (ExpiredJwtException e) {
+            log.info("Expired JWT Token", e);
+            setResponse((HttpServletResponse) response, ErrorCode.JWT_EXPIRE);
+        } catch (UnsupportedJwtException e) {
+
+            log.info("Unsupported JWT Token", e);
+        } catch (IllegalArgumentException e) {
+
+            log.info("JWT claims string is empty.", e);
+        }
+
+        // 토큰 유효성 검사
+
+
+
+
+
     }
 
     // 헤더에서 토큰 추출
@@ -40,4 +79,16 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         }
         return null;
     }
+
+    private ObjectMapper setResponse(HttpServletResponse response, ErrorCode errorCode) throws IOException {
+
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        objectMapper.writeValue(response.getWriter(), ApiResponse.createError(errorCode.getDescription()));
+        return objectMapper;
+
+    }
+
+
 }

@@ -2,10 +2,14 @@ package com.dk.todo.config.jwt;
 
 import com.dk.todo.config.oauth.dto.SessionUser;
 import com.dk.todo.domain.Users;
+import com.dk.todo.domain.response.ApiResponse;
 import com.dk.todo.repository.UserRepository;
+import com.dk.todo.utils.ErrorCode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,7 +21,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
+import java.io.IOException;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
@@ -31,8 +38,7 @@ public class JwtTokenProvider {
     private final Key key;
 
     @Autowired
-    private  UserRepository userRepository;
-
+    private UserRepository userRepository;
 
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
@@ -52,13 +58,12 @@ public class JwtTokenProvider {
         Long userId = userRepository.findByEmail(email).get().getId();
 
 
-
         //Access Token 생성
         return Jwts.builder()
                 .setSubject(email)
                 .claim("userId", userId)
                 .claim("auth", authorities)
-                .setExpiration(new Date(System.currentTimeMillis()+ 1000 * 60 * 30))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -77,33 +82,26 @@ public class JwtTokenProvider {
                         .collect(Collectors.toList());
 
         String userId = (claims.get("userId")).toString();
-        String email =  (claims.get("sub")).toString();
+        String email = (claims.get("sub")).toString();
 //        UserDetails principal = new User(claims.getSubject(), "", authorities);
         UserDetails principal = new SessionUser(Long.parseLong(userId), email);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
-    public boolean validateToken(String token) {
-        try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true;
-        }catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            log.info("Invalid JWT Token", e);
-        } catch (ExpiredJwtException e) {
-            log.info("Expired JWT Token", e);
-        } catch (UnsupportedJwtException e) {
-            log.info("Unsupported JWT Token", e);
-        } catch (IllegalArgumentException e) {
-            log.info("JWT claims string is empty.", e);
-        }
-        return false;
+    public void validateToken(String token) throws IOException {
+
+        Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+
     }
 
     private Claims parseClaims(String accessToken) {
         try {
             return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
         } catch (ExpiredJwtException e) {
+
             return e.getClaims();
         }
     }
+
+
 }
