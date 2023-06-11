@@ -39,7 +39,7 @@ public class UserController {
         return ResponseEntity.ok(userService.checkEmailExists(email));
     }
 
-    @PatchMapping(value = "/update",
+    @PostMapping(value = "/update",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<UserDTO.UserUpdateResponse> updateUser(@RequestPart(value = "userUpdateRequest") UserDTO.UserUpdateRequest userUpdateRequest,
                                                               @RequestPart(value = "multipartFile", required = false) MultipartFile multipartFile,
