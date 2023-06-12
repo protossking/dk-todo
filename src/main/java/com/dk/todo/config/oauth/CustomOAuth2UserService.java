@@ -12,8 +12,10 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Collections;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -45,10 +47,22 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 
     private Users saveOrUpdate(OAuthAttributes attributes) {
-        Users user = userRepository.findByEmail(attributes.getEmail())
-                .map(entity -> entity.update(attributes.getName(), attributes.getProvider()))
-                .orElse(attributes.toEntity());
 
-        return userRepository.save(user);
+        Optional<Users> findUser = userRepository.findByEmail(attributes.getEmail());
+
+        Users user = findUser.orElse(null);
+
+        if(ObjectUtils.isEmpty(user)) {
+            return  attributes.toEntity();
+        }else {
+            return user;
+        }
+
+
+//        Users user = userRepository.findByEmail(attributes.getEmail())
+//                .map(entity -> entity.update(attributes.getName(), attributes.getProvider()))
+//                .orElse(attributes.toEntity());
+//
+//        return userRepository.save(user);
     }
 }
