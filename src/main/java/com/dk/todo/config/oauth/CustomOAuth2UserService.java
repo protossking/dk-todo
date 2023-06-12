@@ -53,7 +53,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         Users user = findUser.orElse(null);
 
         if(ObjectUtils.isEmpty(user)) {
-            return  attributes.toEntity();
+            return  userRepository.save(attributes.toEntity());
         }else {
             return user;
         }
