@@ -10,7 +10,7 @@ env:
   RESOURCE_PATH: ./src/main/resources/application.yaml
   CODE_DEPLOY_APPLICATION_NAME: todo-code-deploy
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: todo-server
-  TZ: "Asia/Seoul"
+
 
 jobs:
   build:
@@ -33,12 +33,12 @@ jobs:
           name: application.properties
           path: ./src/main/resources/application.properties
 
-#       - name: Get Current Time
-#         uses: 1466587594/get-current-time@v2
-#         id: current-time
-#         with:
-#           format: YYYY-MM-DDTHH:mm:ss
-#           utcOffset: "+09:00"
+      - name: Get Current Time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYY-MM-DDTHH:mm:ss
+          utcOffset: "+09:00"
       
 
       - name: Grant execute permission for gradlew
