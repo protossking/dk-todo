@@ -32,6 +32,12 @@ jobs:
           name: application.properties
           path: ./src/main/resources/application.properties
 
+      - name: Get Current Time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYY-MM-DDTHH:mm:ss
+          utcOffset: "+09:00"
       
 
       - name: Grant execute permission for gradlew
