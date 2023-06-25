@@ -36,10 +36,16 @@ public class TaskController {
         return ApiResponse.createSuccess(taskService.findTask(sessionUser.getId()));
     }
 
-    @PatchMapping("/{id}")
-    public ApiResponse<TaskDTO.TaskUpdateResponse> updateTask(@PathVariable(value = "id") Long taskId, @RequestBody TaskDTO.TaskUpdateRequest taskUpdateRequest) {
+    @PatchMapping("/{id}/status")
+    public ApiResponse<TaskDTO.TaskStatusUpdateResponse> updateTaskStatus(@PathVariable(value = "id") Long taskId, @RequestBody TaskDTO.TaskStatusUpdateRequest taskStatusUpdateRequest) {
+        return ApiResponse.createSuccess(taskService.updateTaskStatus(taskId, taskStatusUpdateRequest));
+    }
+
+    @PatchMapping("/{id}/update")
+    public ApiResponse<TaskDTO.TaskResponse> updateTask(@PathVariable(value = "id") Long taskId, @RequestBody TaskDTO.TaskUpdateRequest taskUpdateRequest) {
         return ApiResponse.createSuccess(taskService.updateTask(taskId, taskUpdateRequest));
     }
+
 
     @DeleteMapping("/{id}")
     public ApiResponse<TaskDTO.TaskDeleteResponse> deleteTask(@PathVariable(value = "id") Long taskId) {

@@ -1,5 +1,6 @@
 package com.dk.todo.domain;
 
+import com.dk.todo.domain.dto.TaskDTO;
 import com.dk.todo.domain.enums.TaskStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,9 +36,9 @@ public class Task {
 
     private String backgroundColor;
 
-    private LocalDateTime startedDt;
+    private LocalDateTime startedAt;
 
-    private LocalDateTime endedDt;
+    private LocalDateTime endedAt;
 
     @Column(nullable = false)
     @ColumnDefault("1")
@@ -54,6 +55,15 @@ public class Task {
 
     public void updateBookmark() {
         this.isBookmark = !isBookmark;
+    }
+
+    public void updateTask(TaskDTO.TaskUpdateRequest taskUpdateRequest) {
+        this.title = taskUpdateRequest.getTitle();
+        this.description = taskUpdateRequest.getDescription();
+        this.startedAt = taskUpdateRequest.getStartedAt();
+        this.endedAt = taskUpdateRequest.getEndedAt();
+        this.titleEmoji = taskUpdateRequest.getTitleEmoji();
+        this.backgroundColor = taskUpdateRequest.getBackgroundColor();
     }
 
 }

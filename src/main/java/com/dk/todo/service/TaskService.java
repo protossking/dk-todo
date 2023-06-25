@@ -38,7 +38,7 @@ public class TaskService {
     public Map<TaskStatus, List<TaskDTO.TaskResponse>> findTask(Long userId) {
 
         Map<TaskStatus, List<TaskDTO.TaskResponse>> result = taskRepository.findByUsers_Id(userId).stream()
-                .map(t -> new TaskDTO.TaskResponse(t.getId(), t.getTitle(), t.getTitleEmoji(), t.getDescription(), t.getStatus(), t.getStartedDt(), t.getEndedDt(), t.getIsBookmark(), t.getBackgroundColor()))
+                .map(t -> new TaskDTO.TaskResponse(t.getId(), t.getTitle(), t.getTitleEmoji(), t.getDescription(), t.getStatus(), t.getStartedAt(), t.getEndedAt(), t.getIsBookmark(), t.getBackgroundColor()))
                 .collect(Collectors.toList()).stream().collect(Collectors.groupingBy(TaskDTO.TaskResponse::getTaskStatus));
 
         if(!result.containsKey(TaskStatus.TODO)) {
@@ -60,16 +60,24 @@ public class TaskService {
     }
 
     @Transactional
-    public TaskDTO.TaskUpdateResponse updateTask(Long taskId, TaskDTO.TaskUpdateRequest taskUpdateRequest) {
+    public TaskDTO.TaskStatusUpdateResponse updateTaskStatus(Long taskId, TaskDTO.TaskStatusUpdateRequest taskStatusUpdateRequest) {
 
         /*
         일자 기준으로 TODO 상태로 돌리는거 예외처리해야함
          */
 
         Task findTask = taskRepository.findById(taskId).get();
-        findTask.updateTaskStatus(taskUpdateRequest.getTaskStatus());
+        findTask.updateTaskStatus(taskStatusUpdateRequest.getTaskStatus());
 
-        return new TaskDTO.TaskUpdateResponse(findTask.getId(), findTask.getStatus());
+        return new TaskDTO.TaskStatusUpdateResponse(findTask.getId(), findTask.getStatus());
+    }
+
+    @Transactional
+    public TaskDTO.TaskResponse updateTask(Long taskId, TaskDTO.TaskUpdateRequest taskUpdateRequest) {
+        Task findTask = taskRepository.findById(taskId).get();
+        findTask.updateTask(taskUpdateRequest);
+
+        return new TaskDTO.TaskResponse(findTask.getId(), findTask.getTitle(), findTask.getTitleEmoji(), findTask.getDescription(), findTask.getStatus(), findTask.getStartedAt(), findTask.getEndedAt(), findTask.getIsBookmark(), findTask.getBackgroundColor());
     }
 
     @Transactional
@@ -83,7 +91,7 @@ public class TaskService {
     public Map<TaskStatus, List<TaskDTO.TaskResponse>> findBookmarkedTask(Long userId) {
 
         return taskRepository.findByUsers_IdAndIsBookmarkIsTrue(userId).stream()
-                .map(t -> new TaskDTO.TaskResponse(t.getId(), t.getTitle(), t.getTitleEmoji(), t.getDescription(), t.getStatus(), t.getStartedDt(), t.getEndedDt(), t.getIsBookmark(), t.getBackgroundColor()))
+                .map(t -> new TaskDTO.TaskResponse(t.getId(), t.getTitle(), t.getTitleEmoji(), t.getDescription(), t.getStatus(), t.getStartedAt(), t.getEndedAt(), t.getIsBookmark(), t.getBackgroundColor()))
                 .collect(Collectors.toList()).stream().collect(Collectors.groupingBy(TaskDTO.TaskResponse::getTaskStatus));
 
     }

@@ -31,8 +31,8 @@ public class TaskDTO {
             return Task.builder()
                     .title(this.title)
                     .description(this.description)
-                    .startedDt(this.startedAt)
-                    .endedDt(this.endedAt)
+                    .startedAt(this.startedAt)
+                    .endedAt(this.endedAt)
                     .titleEmoji(this.titleEmoji)
                     .status(TaskStatus.TODO)
                     .backgroundColor(this.backgroundColor)
@@ -43,12 +43,24 @@ public class TaskDTO {
     }
 
 
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class TaskUpdateRequest {
+        private String title;
+        private String description;
+        private LocalDateTime startedAt;
+        private LocalDateTime endedAt;
+        private String titleEmoji;
+        private String backgroundColor;
+    }
+
 
 
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class TaskUpdateRequest {
+    public static class TaskStatusUpdateRequest {
 
         private String taskStatus;
     }
@@ -83,7 +95,7 @@ public class TaskDTO {
 
     @Getter
     @AllArgsConstructor
-    public static class TaskUpdateResponse {
+    public static class TaskStatusUpdateResponse {
 
         private Long taskId;
         private TaskStatus taskStatus;
