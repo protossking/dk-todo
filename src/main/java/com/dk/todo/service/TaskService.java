@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,9 +36,26 @@ public class TaskService {
 
     public Map<TaskStatus, List<TaskDTO.TaskResponse>> findTask(Long userId) {
 
-        return taskRepository.findByUsers_Id(userId).stream()
-                .map(t -> new TaskDTO.TaskResponse(t.getId(), t.getTitle(), t.getTitleEmoji(), t.getDescription(), t.getStatus(), t.getStartedDt(), t.getEndedDt(), t.getIsBookmark()))
+        Map<TaskStatus, List<TaskDTO.TaskResponse>> result = taskRepository.findByUsers_Id(userId).stream()
+                .map(t -> new TaskDTO.TaskResponse(t.getId(), t.getTitle(), t.getTitleEmoji(), t.getDescription(), t.getStatus(), t.getStartedDt(), t.getEndedDt(), t.getIsBookmark(), t.getBackgroundColor()))
                 .collect(Collectors.toList()).stream().collect(Collectors.groupingBy(TaskDTO.TaskResponse::getTaskStatus));
+
+        if(!result.containsKey(TaskStatus.TODO)) {
+            result.put(TaskStatus.TODO, new ArrayList<>());
+        }
+
+        if(!result.containsKey(TaskStatus.DOING)) {
+            result.put(TaskStatus.DOING, new ArrayList<>());
+        }
+
+        if(!result.containsKey(TaskStatus.DONE)) {
+            result.put(TaskStatus.DONE, new ArrayList<>());
+        }
+
+
+
+        return result;
+
     }
 
     @Transactional
@@ -64,7 +82,7 @@ public class TaskService {
     public Map<TaskStatus, List<TaskDTO.TaskResponse>> findBookmarkedTask(Long userId) {
 
         return taskRepository.findByUsers_IdAndIsBookmarkIsTrue(userId).stream()
-                .map(t -> new TaskDTO.TaskResponse(t.getId(), t.getTitle(), t.getTitleEmoji(), t.getDescription(), t.getStatus(), t.getStartedDt(), t.getEndedDt(), t.getIsBookmark()))
+                .map(t -> new TaskDTO.TaskResponse(t.getId(), t.getTitle(), t.getTitleEmoji(), t.getDescription(), t.getStatus(), t.getStartedDt(), t.getEndedDt(), t.getIsBookmark(), t.getBackgroundColor()))
                 .collect(Collectors.toList()).stream().collect(Collectors.groupingBy(TaskDTO.TaskResponse::getTaskStatus));
 
     }

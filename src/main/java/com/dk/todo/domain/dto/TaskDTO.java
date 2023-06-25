@@ -53,6 +53,8 @@ public class TaskDTO {
         private LocalDateTime endedDt;
 
         private Boolean isBookmarked;
+
+        private String backgroundColor;
     }
 
     @Getter
