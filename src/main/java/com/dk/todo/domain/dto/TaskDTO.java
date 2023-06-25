@@ -35,6 +35,7 @@ public class TaskDTO {
                     .endedDt(this.endedAt)
                     .titleEmoji(this.titleEmoji)
                     .status(TaskStatus.TODO)
+                    .backgroundColor(this.backgroundColor)
                     .users(users)
                     .build();
         }
