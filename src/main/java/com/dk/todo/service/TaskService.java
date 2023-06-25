@@ -2,7 +2,6 @@ package com.dk.todo.service;
 
 import com.dk.todo.domain.Task;
 import com.dk.todo.domain.Users;
-import com.dk.todo.domain.dto.TaskAddRequestDTO;
 import com.dk.todo.domain.dto.TaskDTO;
 import com.dk.todo.domain.enums.TaskStatus;
 import com.dk.todo.repository.TaskRepository;
@@ -26,10 +25,12 @@ public class TaskService {
 
 
     @Transactional
-    public Long addTask(TaskAddRequestDTO taskAddRequestDTO, Long userId) {
+    public Long addTask(TaskDTO.TaskRequest taskAddRequestDTO, Long userId) {
 
 
         Users findUser = userRepository.findById(userId).get();
+
+
 
         return taskRepository.save(taskAddRequestDTO.toEntity(findUser)).getId();
     }

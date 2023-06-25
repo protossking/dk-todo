@@ -1,7 +1,6 @@
 package com.dk.todo.controller;
 
 import com.dk.todo.config.oauth.dto.SessionUser;
-import com.dk.todo.domain.dto.TaskAddRequestDTO;
 import com.dk.todo.domain.dto.TaskDTO;
 import com.dk.todo.domain.enums.TaskStatus;
 import com.dk.todo.domain.response.ApiResponse;
@@ -27,7 +26,7 @@ public class TaskController {
 
 
     @PostMapping("")
-    public ResponseEntity<?> postTask(@RequestBody @Valid TaskAddRequestDTO taskAddRequestDTO, @Parameter(hidden = true) @AuthenticationPrincipal SessionUser sessionUser) {
+    public ResponseEntity<?> postTask(@RequestBody @Valid TaskDTO.TaskRequest taskAddRequestDTO, @Parameter(hidden = true) @AuthenticationPrincipal SessionUser sessionUser) {
         return new ResponseEntity<>(taskService.addTask(taskAddRequestDTO, sessionUser.getId()), HttpStatus.OK);
     }
 

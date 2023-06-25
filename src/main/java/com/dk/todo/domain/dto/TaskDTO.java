@@ -1,5 +1,7 @@
 package com.dk.todo.domain.dto;
 
+import com.dk.todo.domain.Task;
+import com.dk.todo.domain.Users;
 import com.dk.todo.domain.enums.TaskStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -14,9 +16,32 @@ public class TaskDTO {
 
 
     @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class TaskRequest {
+        private String title;
+        private String description;
+        private LocalDateTime startedAt;
+        private LocalDateTime endedAt;
+        private String titleEmoji;
+        private String backgroundColor;
+
+
+        public  Task toEntity(Users users) {
+            return Task.builder()
+                    .title(this.title)
+                    .description(this.description)
+                    .startedDt(this.startedAt)
+                    .endedDt(this.endedAt)
+                    .titleEmoji(this.titleEmoji)
+                    .status(TaskStatus.TODO)
+                    .users(users)
+                    .build();
+        }
 
     }
+
+
 
 
     @Getter
@@ -26,8 +51,6 @@ public class TaskDTO {
 
         private String taskStatus;
     }
-
-
 
 
     @Getter
