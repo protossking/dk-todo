@@ -47,10 +47,10 @@ public class TaskDTO {
         private TaskStatus taskStatus;
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
-        private LocalDateTime startedDt;
+        private LocalDateTime startedAt;
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
-        private LocalDateTime endedDt;
+        private LocalDateTime endedAt;
 
         private Boolean isBookmarked;
 
