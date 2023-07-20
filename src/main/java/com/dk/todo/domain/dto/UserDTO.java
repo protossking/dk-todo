@@ -48,6 +48,17 @@ public class UserDTO {
         private String profileImg;
     }
 
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UserSearchResponse {
+
+        private Long id;
+        private String email;
+        private String name;
+        private String profileImg;
+    }
+
 
 
 }
