@@ -1,16 +1,17 @@
 package com.dk.todo.controller;
 
 import com.dk.todo.config.oauth.dto.SessionUser;
+import com.dk.todo.domain.dto.SignupForm;
 import com.dk.todo.domain.dto.UserDTO;
 import com.dk.todo.domain.response.ApiResponse;
 import com.dk.todo.service.UserService;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -23,23 +24,19 @@ public class UserController {
         this.userService = userService;
     }
 
-//    @PostMapping("/signup")
-//    public ApiResponse<Long> signup(@RequestBody SignupForm signupForm) {
-//        return ApiResponse.createSuccess(userService.signup(signupForm));
-//    }
-    //    @GetMapping("/signup/check/{email}/exists")
-//    public ResponseEntity<Boolean> checkEmailDuplicate(@PathVariable String email) {
-//        return ResponseEntity.ok(userService.checkEmailExists(email));
-//    }
-
     @PostMapping("/login")
     public ApiResponse<String> loginSuccess(@RequestBody Map<String, String> loginForm) {
         return ApiResponse.createSuccess(userService.login(loginForm.get("email"), loginForm.get("password")));
     }
 
-    @GetMapping("/search")
-    public ApiResponse<List<UserDTO.UserSearchResponse>> searchUsers(@RequestParam(name = "name") String name) {
-        return ApiResponse.createSuccess(userService.searchUsers(name));
+    @PostMapping("/signup")
+    public ApiResponse<Long> signup(@RequestBody SignupForm signupForm) {
+        return ApiResponse.createSuccess(userService.signup(signupForm));
+    }
+
+    @GetMapping("/signup/check/{email}/exists")
+    public ResponseEntity<Boolean> checkEmailDuplicate(@PathVariable String email) {
+        return ResponseEntity.ok(userService.checkEmailExists(email));
     }
 
     @PatchMapping(value = "/update",

@@ -18,9 +18,6 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @Transactional
 public class UserService {
@@ -101,11 +98,8 @@ public class UserService {
 
         return new UserDTO.UserDetailResponse(findUser.getId(), findUser.getEmail(), findUser.getFacebookUrl(), findUser.getInstagramUrl(), findUser.getTwitterUrl(), findUser.getName(), findUser.getProfileImg());
 
-    }
 
-    public List<UserDTO.UserSearchResponse> searchUsers(String name) {
-        return userRepository.findByNameContaining(name).stream().map(u -> new UserDTO.UserSearchResponse(u.getId(), u.getEmail(), u.getName(), u.getProfileImg()))
-                .collect(Collectors.toList());
+
     }
 
 }
