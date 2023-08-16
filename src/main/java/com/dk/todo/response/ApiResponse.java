@@ -1,4 +1,4 @@
-package com.dk.todo.domain.response;
+package com.dk.todo.response;
 
 import lombok.AccessLevel;
 import lombok.Getter;

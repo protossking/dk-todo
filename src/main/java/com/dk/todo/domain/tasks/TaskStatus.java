@@ -1,4 +1,4 @@
-package com.dk.todo.domain.enums;
+package com.dk.todo.domain.tasks;
 
 public enum TaskStatus {
 

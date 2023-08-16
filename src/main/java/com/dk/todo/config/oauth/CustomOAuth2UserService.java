@@ -1,8 +1,8 @@
 package com.dk.todo.config.oauth;
 
 import com.dk.todo.config.oauth.dto.OAuthAttributes;
-import com.dk.todo.domain.Users;
-import com.dk.todo.repository.UserRepository;
+import com.dk.todo.domain.users.Users;
+import com.dk.todo.domain.users.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

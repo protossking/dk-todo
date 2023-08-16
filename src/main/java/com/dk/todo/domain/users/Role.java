@@ -1,4 +1,4 @@
-package com.dk.todo.domain.enums;
+package com.dk.todo.domain.users;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

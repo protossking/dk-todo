@@ -1,4 +1,4 @@
-package com.dk.todo.domain.dto;
+package com.dk.todo.api.users.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

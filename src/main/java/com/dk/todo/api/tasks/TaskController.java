@@ -1,10 +1,10 @@
-package com.dk.todo.controller;
+package com.dk.todo.api.tasks;
 
 import com.dk.todo.config.oauth.dto.SessionUser;
-import com.dk.todo.domain.dto.TaskDTO;
-import com.dk.todo.domain.enums.TaskStatus;
-import com.dk.todo.domain.response.ApiResponse;
-import com.dk.todo.service.TaskService;
+import com.dk.todo.api.tasks.request.TaskDTO;
+import com.dk.todo.domain.tasks.TaskStatus;
+import com.dk.todo.response.ApiResponse;
+import com.dk.todo.api.tasks.service.TaskService;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

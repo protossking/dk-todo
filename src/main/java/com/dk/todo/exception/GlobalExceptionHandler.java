@@ -1,8 +1,6 @@
-package com.dk.todo.domain.exception;
+package com.dk.todo.exception;
 
-import com.dk.todo.domain.response.ApiResponse;
-import com.dk.todo.utils.ErrorCode;
-import io.jsonwebtoken.ExpiredJwtException;
+import com.dk.todo.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

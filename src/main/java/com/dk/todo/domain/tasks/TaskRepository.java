@@ -1,6 +1,6 @@
-package com.dk.todo.repository;
+package com.dk.todo.domain.tasks;
 
-import com.dk.todo.domain.Task;
+import com.dk.todo.domain.tasks.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

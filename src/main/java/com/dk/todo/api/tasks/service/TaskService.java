@@ -1,11 +1,11 @@
-package com.dk.todo.service;
+package com.dk.todo.api.tasks.service;
 
-import com.dk.todo.domain.Task;
-import com.dk.todo.domain.Users;
-import com.dk.todo.domain.dto.TaskDTO;
-import com.dk.todo.domain.enums.TaskStatus;
-import com.dk.todo.repository.TaskRepository;
-import com.dk.todo.repository.UserRepository;
+import com.dk.todo.domain.tasks.Task;
+import com.dk.todo.domain.users.Users;
+import com.dk.todo.api.tasks.request.TaskDTO;
+import com.dk.todo.domain.tasks.TaskStatus;
+import com.dk.todo.domain.tasks.TaskRepository;
+import com.dk.todo.domain.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

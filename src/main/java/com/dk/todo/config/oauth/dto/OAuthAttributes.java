@@ -1,7 +1,7 @@
 package com.dk.todo.config.oauth.dto;
 
-import com.dk.todo.domain.Users;
-import com.dk.todo.domain.enums.Role;
+import com.dk.todo.domain.users.Users;
+import com.dk.todo.domain.users.Role;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,7 +1,7 @@
-package com.dk.todo.domain;
+package com.dk.todo.domain.tasks;
 
-import com.dk.todo.domain.dto.TaskDTO;
-import com.dk.todo.domain.enums.TaskStatus;
+import com.dk.todo.api.tasks.request.TaskDTO;
+import com.dk.todo.domain.users.Users;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

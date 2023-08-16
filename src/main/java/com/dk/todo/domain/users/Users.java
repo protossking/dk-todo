@@ -1,7 +1,6 @@
-package com.dk.todo.domain;
+package com.dk.todo.domain.users;
 
-import com.dk.todo.domain.dto.UserDTO;
-import com.dk.todo.domain.enums.Role;
+import com.dk.todo.api.users.request.UserDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

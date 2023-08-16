@@ -1,10 +1,9 @@
-package com.dk.todo.controller;
+package com.dk.todo.api.users;
 
+import com.dk.todo.api.users.request.UserDTO;
 import com.dk.todo.config.oauth.dto.SessionUser;
-import com.dk.todo.domain.dto.SignupForm;
-import com.dk.todo.domain.dto.UserDTO;
-import com.dk.todo.domain.response.ApiResponse;
-import com.dk.todo.service.UserService;
+import com.dk.todo.response.ApiResponse;
+import com.dk.todo.api.users.service.UserService;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +28,10 @@ public class UserController {
         return ApiResponse.createSuccess(userService.login(loginForm.get("email"), loginForm.get("password")));
     }
 
-    @PostMapping("/signup")
-    public ApiResponse<Long> signup(@RequestBody SignupForm signupForm) {
-        return ApiResponse.createSuccess(userService.signup(signupForm));
-    }
+//    @PostMapping("/signup")
+//    public ApiResponse<Long> signup(@RequestBody SignupForm signupForm) {
+//        return ApiResponse.createSuccess(userService.signup(signupForm));
+//    }
 
     @GetMapping("/signup/check/{email}/exists")
     public ResponseEntity<Boolean> checkEmailDuplicate(@PathVariable String email) {

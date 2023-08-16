@@ -1,6 +1,5 @@
-package com.dk.todo.repository;
+package com.dk.todo.domain.users;
 
-import com.dk.todo.domain.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

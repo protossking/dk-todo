@@ -1,8 +1,8 @@
 package com.dk.todo.config.oauth;
 
 import com.dk.todo.config.oauth.dto.SessionUser;
-import com.dk.todo.domain.Users;
-import com.dk.todo.repository.UserRepository;
+import com.dk.todo.domain.users.Users;
+import com.dk.todo.domain.users.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -1,8 +1,8 @@
-package com.dk.todo.domain.dto;
+package com.dk.todo.api.tasks.request;
 
-import com.dk.todo.domain.Task;
-import com.dk.todo.domain.Users;
-import com.dk.todo.domain.enums.TaskStatus;
+import com.dk.todo.domain.tasks.Task;
+import com.dk.todo.domain.users.Users;
+import com.dk.todo.domain.tasks.TaskStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

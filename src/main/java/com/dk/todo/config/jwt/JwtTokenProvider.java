@@ -1,28 +1,20 @@
 package com.dk.todo.config.jwt;
 
 import com.dk.todo.config.oauth.dto.SessionUser;
-import com.dk.todo.domain.Users;
-import com.dk.todo.domain.response.ApiResponse;
-import com.dk.todo.repository.UserRepository;
-import com.dk.todo.utils.ErrorCode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.dk.todo.domain.users.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.security.Key;

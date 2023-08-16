@@ -38,21 +38,13 @@ public class FileUtils {
         String fileUrl = HTTPS_PREFIX + bucket + "/" + userId.toString() + "/" + fileName;
 
         ObjectMetadata metadata = new ObjectMetadata();
-//            metadata.setCacheControl(multipartFile.getContentType());
-//            metadata.setContentLength(multipartFile.getSize());
         metadata.setContentType(multipartFile.getContentType());
         metadata.setContentLength(multipartFile.getSize());
 
         try (InputStream inputStream = multipartFile.getInputStream()) {
 
-
-//            amazonS3Client.putObject(bucket, fileName, multipartFile.getInputStream(), metadata);
             amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, inputStream, metadata).withCannedAcl(CannedAccessControlList.PublicRead));
-
-
-
             return amazonS3Client.getUrl(bucket, fileName).toString();
-
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);

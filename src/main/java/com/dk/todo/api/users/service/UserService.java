@@ -1,13 +1,11 @@
-package com.dk.todo.service;
+package com.dk.todo.api.users.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.dk.todo.api.users.request.UserDTO;
 import com.dk.todo.config.jwt.JwtTokenProvider;
-import com.dk.todo.domain.Users;
-import com.dk.todo.domain.dto.SignupForm;
-import com.dk.todo.domain.dto.UserDTO;
-import com.dk.todo.repository.UserRepository;
+import com.dk.todo.domain.users.UserRepository;
+import com.dk.todo.domain.users.Users;
 import com.dk.todo.utils.FileUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @Transactional
@@ -52,22 +49,22 @@ public class UserService {
 
     }
 
-    public Long signup(SignupForm signupForm) {
-        boolean check = checkEmailExists(signupForm.getEmail());
-
-        if (check) {
-            throw new IllegalArgumentException("이미 존재하는 유저입니다.");
-        }
-
-        String encPwd = encoder.encode(signupForm.getPassword());
-
-        Users user = userRepository.save(signupForm.toEntity(encPwd));
-
-        if(user!=null) {
-            return user.getId();
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
+//    public Long signup(SignupForm signupForm) {
+//        boolean check = checkEmailExists(signupForm.getEmail());
+//
+//        if (check) {
+//            throw new IllegalArgumentException("이미 존재하는 유저입니다.");
+//        }
+//
+//        String encPwd = encoder.encode(signupForm.getPassword());
+//
+//        Users user = userRepository.save(signupForm.toEntity(encPwd));
+//
+//        if(user!=null) {
+//            return user.getId();
+//        }
+//        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+//    }
 
     public boolean checkEmailExists(String email) {
         return userRepository.existsUsersByEmail(email);

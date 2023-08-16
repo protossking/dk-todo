@@ -1,7 +1,6 @@
 package com.dk.todo.config.oauth.dto;
 
-import com.dk.todo.domain.Users;
-import com.dk.todo.domain.enums.Role;
+import com.dk.todo.domain.users.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;

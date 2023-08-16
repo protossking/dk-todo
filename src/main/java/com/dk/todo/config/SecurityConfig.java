@@ -16,7 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -71,7 +71,6 @@ public class SecurityConfig {
                 .failureHandler(oAuth2AuthenticationFailureHandler)
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
-//                .addFilterBefore(jwtExceptionHandlerFilter, JwtAuthenticationFilter.class);
 
         return http.build();
     }

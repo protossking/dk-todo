@@ -1,6 +1,6 @@
 package com.dk.todo.config.jwt;
 
-import com.dk.todo.domain.response.ApiResponse;
+import com.dk.todo.response.ApiResponse;
 import com.dk.todo.utils.ErrorCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -59,11 +59,6 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
             log.info("JWT claims string is empty.", e);
         }
-
-        // 토큰 유효성 검사
-
-
-
 
 
     }
