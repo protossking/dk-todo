@@ -1,9 +1,7 @@
-package com.dk.todo.exception;
+package com.dk.todo.config;
 
 import com.dk.todo.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,9 +13,14 @@ public class GlobalExceptionHandler
 {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResponse<?>> handleValidateException(BindingResult bindingResult) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.createFail(bindingResult));
+    public ApiResponse<?> handleValidateException(BindingResult bindingResult) {
+        return ApiResponse.createFail(bindingResult);
     }
 
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ApiResponse<?> handleIllegalArgumentException(String msg) {
+        return ApiResponse.createError(msg);
+    }
 
 }
