@@ -1,15 +1,17 @@
 package com.dk.todo.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.util.List;
 
 
+@RequiredArgsConstructor
 @Service
 public class MailService {
 
@@ -18,33 +20,32 @@ public class MailService {
 
     private final static String inviteSubject = "[Todo Group] 초대 메일 ";
 
-    @Autowired
-    public MailService(JavaMailSender mailSender, SpringTemplateEngine templateEngine) {
-        this.mailSender = mailSender;
-        this.templateEngine = templateEngine;
+
+    public void sendInviteMail(String code, List<String> emails, String teamName) {
+
+
+        try {
+            for (String email : emails) {
+                MimeMessage message = mailSender.createMimeMessage();
+                message.addRecipients(MimeMessage.RecipientType.TO, email);
+                message.setSubject(inviteSubject);
+                message.setFrom("todo_test_1@naver.com");
+                message.setText(setContext(code, teamName), "utf-8", "html");
+                mailSender.send(message);
+            }
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
-    public void sendInviteMail(String email) {
+    private String setContext(String code, String teamName) {
 
         Context context = new Context();
-        context.setVariable("asdf", "asdf");
-
-        String body = templateEngine.process("invite-template.html", context);
-        sendMail(email, inviteSubject, body);
-
-
+        context.setVariable("code", code);
+        context.setVariable("teamName", teamName);
+        return templateEngine.process("invite-template", context);
     }
 
-    private void sendMail(String to, String subject, String body) {
-
-        MimeMessagePreparator mimeMessagePreparator = mimeMessage -> {
-            final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-            helper.setFrom("noreply@noreply.com");
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(body, true);
-        };
-
-        mailSender.send(mimeMessagePreparator);
-    }
 }

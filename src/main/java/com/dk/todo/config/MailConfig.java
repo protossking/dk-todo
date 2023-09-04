@@ -33,13 +33,21 @@ public class MailConfig {
         mailSender.setUsername(username);
         mailSender.setPassword(password);
 
-
-        Properties props = mailSender.getJavaMailProperties();
-        props.put("spring.mail.properties.mail.smtp.auth", "true");
-        props.put("spring.mail.properties.mail.smtp.ssl.enable", "true");
-        props.put("spring.mail.properties.mail.smtp.ssl.trus", "smtp.naver.com");
-        props.put("spring.mail.properties.mail.smtp.starttls.enable", "true");
+        mailSender.setJavaMailProperties(getMailProperties());
 
         return mailSender;
+    }
+
+    private Properties getMailProperties() {
+
+        Properties props = new Properties();
+        props.setProperty("mail.transport.protocol", "smtp"); // 프로토콜 설정
+        props.setProperty("mail.smtp.auth", "true"); // smtp 인증
+        props.setProperty("mail.smtp.starttls.enable", "true"); // smtp strattles 사용
+        props.setProperty("mail.debug", "true"); // 디버그 사용
+        props.setProperty("mail.smtp.ssl.trust","smtp.naver.com"); // ssl 인증 서버는 smtp.naver.com
+        props.setProperty("mail.smtp.ssl.enable","true"); // ssl 사용
+
+        return props;
     }
 }
