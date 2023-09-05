@@ -53,7 +53,7 @@ public class TaskController {
     }
 
     @GetMapping("/bookmark")
-    public ApiResponse<Map<TaskStatus, List<TaskDTO.TaskResponse>>> findBookmarkedTask(@Parameter(hidden = true) @AuthenticationPrincipal SessionUser sessionUser) {
+    public ApiResponse<Map<TaskStatus, List<TaskDTO.TaskResponse>>> findBookmarkedTask(@Parameter(hidden = true)  @AuthenticationPrincipal SessionUser sessionUser) {
 
         return ApiResponse.createSuccess(taskService.findBookmarkedTask(sessionUser.getId()));
     }
