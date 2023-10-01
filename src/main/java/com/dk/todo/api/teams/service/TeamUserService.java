@@ -1,4 +1,4 @@
-package com.dk.todo.api.groups.service;
+package com.dk.todo.api.teams.service;
 
 import com.dk.todo.domain.teams.TeamUserRepository;
 import com.dk.todo.domain.teams.TeamUsers;
@@ -17,5 +17,10 @@ public class TeamUserService {
 
         return teamUserRepository.save(new TeamUsers(teamId, userId))
                 .getId();
+    }
+
+    public void deleteTeamUser(Long teamId) {
+
+        teamUserRepository.deleteAllByTeamId(teamId);
     }
 }

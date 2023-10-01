@@ -1,4 +1,4 @@
-package com.dk.todo.api.groups.request;
+package com.dk.todo.api.teams.request;
 
 import com.dk.todo.domain.teams.Teams;
 import lombok.Getter;

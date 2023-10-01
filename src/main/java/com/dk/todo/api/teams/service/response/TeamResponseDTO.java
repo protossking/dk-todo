@@ -1,4 +1,4 @@
-package com.dk.todo.api.groups.service.response;
+package com.dk.todo.api.teams.service.response;
 
 import lombok.Builder;
 import lombok.Getter;
