@@ -25,7 +25,7 @@ jobs:
         with:
           java-version: 11
       - name: Setup Mysql
-        uses: sadmin/mysql-action@v1
+        uses: actions/mysql-action@v1
         with:
           character set server: 'utf8'
           mysql database: ${{ secrets.DATABASE }}
