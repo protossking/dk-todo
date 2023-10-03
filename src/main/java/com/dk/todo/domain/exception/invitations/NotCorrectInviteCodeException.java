@@ -7,3 +7,4 @@ public class NotCorrectInviteCodeException extends IllegalArgumentException{
         super(MESSAGE);
     }
 }
+
