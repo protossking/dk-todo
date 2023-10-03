@@ -24,6 +24,13 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      - name: Setup Mysql
+        uses: actions/setup-java@v3
+        with:
+          character set server: 'utf8'
+          mysql database: ${{ secrets.DATABASE }}
+          mysql user: ${{ secrets.DB_USER }}
+          mysql password: ${{ secrets.DB_PASSWORD }}
           
       - uses: actions/checkout@v2
       - run: touch ./src/main/resources/application.properties
