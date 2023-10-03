@@ -24,8 +24,8 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 11
-      - name: Setup Mysql
-        uses: actions/mysql-action@v1
+      - name: Setup MySQL
+        uses: mirromutth/mysql-action@v1.1    
         with:
           character set server: 'utf8'
           mysql database: ${{ secrets.DATABASE }}
