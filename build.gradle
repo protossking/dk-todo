@@ -1,22 +1,12 @@
-buildscript {
-	ext {
-		queryDslVersion = "5.0.0"
-	}
-}
-
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.11'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-//	querydsl
-	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'com.dk'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
-
-
 
 configurations {
 	compileOnly {
@@ -51,6 +41,11 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
 
+
+
+
+
+
 //	swagger
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
 
@@ -66,45 +61,10 @@ dependencies {
 //	thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
-
-//	querydsl
-	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
-}
-
-test {
-	useJUnitPlatform()
-}
-
-def querydslDir = "$buildDir/generated/querydsl"
-
-querydsl {
-	jpa = true
-	querydslSourcesDir = querydslDir
-}
-sourceSets {
-	main.java.srcDir querydslDir
-}
-compileQuerydsl{
-	options.annotationProcessorPath = configurations.querydsl
-}
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-	querydsl.extendsFrom compileClasspath
-}
-
-sourceSets {
-	main {
-		java {
-			srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
-		}
-	}
 }
 
 
 
 jar {
-    enabled = false
+	enabled = false
 }
