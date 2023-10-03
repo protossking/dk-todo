@@ -53,6 +53,7 @@ public class TeamController {
 
         return ApiResponse.createSuccess(teamService.getTeams());
 
+
     }
 
     @Operation(summary = "팀(그룹) 상세조회", description = "이름, 그룹장이름, 그룹 설명, 그룹인원, 그룹원 정보(이름, 이메일), 그룹 대표 이미지")
