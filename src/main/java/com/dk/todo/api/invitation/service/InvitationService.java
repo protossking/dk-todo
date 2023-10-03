@@ -2,8 +2,8 @@ package com.dk.todo.api.invitation.service;
 
 import com.dk.todo.domain.exception.invitations.NotCorrectInviteCodeException;
 import com.dk.todo.domain.exception.invitations.NotFoundInvitationId;
-import com.dk.todo.domain.invitations.Invitations;
 import com.dk.todo.domain.invitations.InvitationRepository;
+import com.dk.todo.domain.invitations.Invitations;
 import com.dk.todo.domain.teams.TeamRepository;
 import com.dk.todo.event.InvitedEvent;
 import lombok.RequiredArgsConstructor;

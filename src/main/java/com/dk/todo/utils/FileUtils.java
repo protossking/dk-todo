@@ -35,7 +35,7 @@ public class FileUtils {
 
 
         String fileName = multipartFile.getOriginalFilename();
-        String fileUrl = HTTPS_PREFIX + bucket + "/" + userId.toString() + "/" + fileName;
+//        String fileUrl = HTTPS_PREFIX + bucket + "/" + userId.toString() + "/" + fileName;
 
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(multipartFile.getContentType());

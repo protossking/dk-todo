@@ -23,14 +23,22 @@ public class Teams extends BaseEntity {
     @Column(name = "host_id")
     private Long hostId;
 
+    @Column(name = "introduce")
+    private String introduce;
+
+    @Column(name = "file_url")
+    private String fileUrl;
+
     public Teams() {
 
     }
 
     @Builder
-    public Teams(String teamName, Integer teamSize, Long hostId) {
+    public Teams(String teamName, Integer teamSize, Long hostId, String fileUrl, String introduce) {
         this.teamName = teamName;
         this.teamSize = teamSize;
         this.hostId = hostId;
+        this.fileUrl = fileUrl;
+        this.introduce = introduce;
     }
 }
