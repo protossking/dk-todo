@@ -67,6 +67,7 @@ public class SecurityConfig {
                 .and()
                 .userInfoEndpoint().userService(customOAuth2UserService)
                 .and()
+                .loginPage("/login")
                 .successHandler(oAuth2AuthenticationSuccessHandler)
                 .failureHandler(oAuth2AuthenticationFailureHandler)
                 .and()
